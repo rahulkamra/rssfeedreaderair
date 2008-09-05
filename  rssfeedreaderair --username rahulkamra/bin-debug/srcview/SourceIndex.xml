@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<index>
+	<title>Source of Air</title>
+	<nodes>
+		<node label="libs">
+		</node>
+		<node icon="classpathIcon" label="src" expanded="true">
+			<node icon="mxmlIcon" label="AddRss.mxml" url="source/AddRss.mxml.html"/>
+			<node label="Air-app.xml" url="source/Air-app.xml.txt"/>
+			<node icon="mxmlAppIcon" selected="true" label="Air.mxml" url="source/Air.mxml.html"/>
+			<node icon="mxmlIcon" label="MyRss.mxml" url="source/MyRss.mxml.html"/>
+			<node icon="actionScriptIcon" label="requestFeed.as" url="source/requestFeed.as.html"/>
+			<node icon="imageIcon" label="rss.png" url="source/rss.png.html"/>
+			<node icon="actionScriptIcon" label="xmlDataIO.as" url="source/xmlDataIO.as.html"/>
+		</node>
+	</nodes>
+</index>
