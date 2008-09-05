@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="210" height="291"  backgroundColor="#FFFFFF" creationCompleteEffect="showMyRsseffect" creationComplete="getDaata()">
+
+     <mx:Script>
+     	<![CDATA[
+     		import mx.controls.Alert;
+     		import mx.collections.ArrayCollection;
+     		[Bindable]
+     		public var parentObj:Air;
+     		
+     		public var temppp:XMLList;
+     		public function clickM(evenr:MouseEvent):void{
+     			var temp:Air=parentObj as Air;
+     			temp.registerRssFeed();
+     		}
+     		
+     		public function getDaata():void{
+     			//temppp=XMLList(parentObj.recordsXML.children());
+     		
+     			    		
+     			}
+     	]]>
+     </mx:Script>
+     <mx:Script source="xmlDataIO.as"/>
+	<mx:Button x="58" y="219" label="Add URL" cornerRadius="10" click="clickM(event)"/>
+	<mx:Tree x="10" y="1" height="201" dataProvider="{parentObj.recordsXML}" labelField="@label" width="100%" itemClick="getURL(event,this)" id="myRssTree"></mx:Tree>
+	
+	
+	
+
+	
+</mx:TitleWindow>

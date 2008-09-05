@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="1024" height="768"  backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#24A096, #FFFFFF]" creationComplete="init()" viewSourceURL="srcview/index.html">
+	<mx:Script>
+		<![CDATA[
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+		
+		public var isshowMyRssFeedPresent:Boolean=false;
+		
+		
+		public var file:File;
+		[Bindable]
+		public var recordsXML:XML;
+		
+		public function init():void{
+			    file = File.documentsDirectory.resolvePath("records.xml");
+			    var fs:FileStream = new FileStream();
+				fs.open(file, FileMode.READ);
+				recordsXML = XML(fs.readUTFBytes(fs.bytesAvailable));
+                fs.close();              			
+		}
+		
+		
+		public function registerRssFeed():void{
+			var temp:AddRss=AddRss(PopUpManager.createPopUp(this,AddRss,true));
+			//Alert.show(temp.transitions.toString());
+			temp.parentNode=this;
+			PopUpManager.bringToFront(temp);
+		}
+
+        public function showMyRssFeed():void{
+        	if(!isshowMyRssFeedPresent){
+        	var temp:MyRss=MyRss(PopUpManager.createPopUp(this,MyRss,false));
+        	temp.parentObj=this;
+        	isshowMyRssFeedPresent=true;
+        	PopUpManager.bringToFront(temp);
+        	
+        		}
+        }
+        
+        public var response:XMLList;
+        public function getRssFeed(url:String):void{
+        response=XMLList(requestFeedFunc(url));
+        }
+        
+        public function getDescription(selectedIndex:int):void{
+        	description.htmlText=request.lastResult.rss.channel.item[selectedIndex].description;
+        }
+
+		]]>
+	</mx:Script>
+	<mx:Script  source="requestFeed.as"/>
+	<mx:Script  source="xmlDataIO.as"/>
+	<mx:HBox x="422" y="10" width="448" height="36">
+		<mx:Image width="36" height="35" source="rss.png" click="showMyRssFeed()"/>
+	</mx:HBox>
+<mx:Sequence id="showURLLinkeffect">
+<mx:Move xTo="179" yTo="90" duration="1"/>
+<mx:WipeDown duration="1000"/>
+</mx:Sequence>
+
+<mx:Sequence id="showMyRsseffect">
+	<mx:Move xTo="117" yTo="165" duration="0"/>
+	<mx:WipeLeft duration="1000"/>
+</mx:Sequence>
+	<mx:VBox x="135" y="90" width="194" height="79">
+		<mx:LinkButton label="LinkButton" color="#E65449"/>
+		<mx:LinkButton label="LinkButton" color="#E5630D"/>
+	
+	</mx:VBox>
+	<mx:VDividedBox x="337" y="90" height="547" width="637" backgroundColor="#FFFFFF">
+		<mx:DataGrid height="233" width="100%" dataProvider="{request.lastResult.rss.channel.item}" itemClick="getDescription(datagrid.selectedIndex)" id="datagrid">	
+		<mx:columns>
+			<mx:DataGridColumn headerText="Title" dataField="title"/>
+			<mx:DataGridColumn headerText="PublishDate" dataField="pubDate"/>
+			<mx:DataGridColumn headerText="Link" dataField="link"/>
+		</mx:columns>
+		</mx:DataGrid>
+		<mx:TextArea width="100%" id="description" editable="false" height="327"/>
+	</mx:VDividedBox>
+	<mx:Label x="31" y="10" text="Status" width="58" height="36" fontSize="15" color="#E65449"/>
+	<mx:Label x="97" y="10" fontSize="15" id="statusNode" color="#E65449"/>
+	
+
+</mx:WindowedApplication>
